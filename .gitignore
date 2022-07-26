@@ -1,1 +1,5 @@
 /config/
+/static/
+/templates/
+/app.py
+/session.session
