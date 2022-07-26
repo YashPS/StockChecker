@@ -19,8 +19,7 @@ def send_msg(text):
 def get_page_html(url):
     options = webdriver.ChromeOptions()
     options.add_argument('--headless')
-    browser = webdriver.Chrome(options=options, executable_path='E:/code/PycharmProjects/StockChecker/execs'
-                                                                '/chromedriver.exe')
+    browser = webdriver.Chrome(options=options, executable_path='./execs/chromedriver.exe')
     browser.get(url)
     html = browser.page_source
 
