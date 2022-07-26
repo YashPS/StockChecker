@@ -8,7 +8,7 @@
 
 ## HOW TO USE
 
-1. Create your own config.yaml in config/ directory
+1. Create your own config.yaml in config/ directory based on config_template.yaml
 
 2. Update the config as per below guidelines -
 ```yaml
