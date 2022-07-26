@@ -1,0 +1,7 @@
+/config/
+/static/
+/templates/
+/app.py
+/session.session
+/.idea
+/__pycache__
