@@ -8,9 +8,9 @@
 
 ## HOW TO USE
 
-1. Add a 'config' directory, create a 'config.yaml' file
+1. Create your own config.yaml in config/ directory
 
-2. Insert the following into the yaml file -
+2. Update the config as per below guidelines -
 ```yaml
 token: <your_telegram_bot_token>
 chat_id: <your_telegram_chat_id>
