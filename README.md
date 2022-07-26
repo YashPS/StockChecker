@@ -3,7 +3,7 @@
 #### by Yash Pratap Singh
 *Setup telegram to receive notifications when your item is in stock! (recommend you to Google through this setup)*
 
-*Capable of checking websites with dynamic changes after loading*
+*Capable of checking websites with dynamic changes after loading, using Chrome-driver of Selenium*
 
 
 ## HOW TO USE
