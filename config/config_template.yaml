@@ -1,0 +1,7 @@
+token: <your_telegram_bot_token>
+chat_id: <your_telegram_chat_id>
+request_url: <product_url>
+test_url: <url_of_product_in_stock{for testing only}>
+item_name: <display_name_for_telegram_notification>
+class_name: <class_identifier_to_find_in_request_url_html>
+check_phrase: <unique_text_in_out_of_stock_page{something like 'out of stock'}>

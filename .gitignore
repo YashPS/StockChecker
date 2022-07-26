@@ -1,4 +1,4 @@
-/config/
+/config/config.yaml
 /static/
 /templates/
 /app.py
