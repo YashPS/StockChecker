@@ -3,9 +3,11 @@ import requests
 import time
 from selenium import webdriver
 import yaml
+from collections import deque
 
 with open('./config/config.yaml') as f:
     conf = yaml.safe_load(f)
+q = deque([False, False, False], maxlen=3)
 
 
 def send_msg(text):
@@ -29,21 +31,22 @@ def get_page_html(url):
 def check_item_in_stock(page_html):
     soup = BeautifulSoup(page_html, 'html.parser')
     out_of_stock_divs = conf['check_phrase'] in str(soup.find_all(class_=conf['class_name']))
-    print(out_of_stock_divs)
     return out_of_stock_divs
 
 
 def check_inventory():
-    url1 = conf['request_url']
-    url2 = conf['test_url']
-    page_html = get_page_html(url1)
+    url_check = conf['request_url']
+    url_validate = conf['test_url']
+    page_html = get_page_html(url_check)
     if not check_item_in_stock(page_html):
         print("In stock")
-        send_msg(f"{conf['item_name']} is in stock!")
+        q.append(True)
+        if False not in q:
+            send_msg(f"{conf['item_name']} is in stock!")
     else:
         print("Out of stock")
 
 
 while True:
     check_inventory()
-    time.sleep(60)
+    time.sleep(15)
