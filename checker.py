@@ -4,10 +4,15 @@ import time
 from selenium import webdriver
 import yaml
 from collections import deque
+from selenium import webdriver
+from selenium.common.exceptions import TimeoutException
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
 
 with open('./config/config.yaml') as f:
     conf = yaml.safe_load(f)
-q = deque([False, False, False], maxlen=3)
+q = deque([False, False, False], maxlen=5)
 
 
 def send_msg(text):
@@ -18,15 +23,21 @@ def send_msg(text):
     print(results.json())
 
 
-def get_page_html(url):
+def find_element(url, element_name):
+
+    timeout = 5
     options = webdriver.ChromeOptions()
     options.add_argument('--headless')
-    browser = webdriver.Chrome(options=options, executable_path='./execs/chromedriver.exe')
-    browser.get(url)
-    html = browser.page_source
+    driver = webdriver.Chrome(options=options, executable_path='./execs/chromedriver.exe')
+    driver.get(url)
 
-    return html
-
+    try:
+        myElem = WebDriverWait(driver, timeout).until(
+        EC.presence_of_element_located((By.CSS_SELECTOR, element_name)))
+        return False
+    except TimeoutException:
+        return True
+    driver.quit()
 
 def check_item_in_stock(page_html):
     soup = BeautifulSoup(page_html, 'html.parser')
@@ -37,12 +48,11 @@ def check_item_in_stock(page_html):
 def check_inventory():
     url_check = conf['request_url']
     url_validate = conf['test_url']
-    page_html = get_page_html(url_check)
-    if not check_item_in_stock(page_html):
+    element_name = conf['element_name']
+    element_found = find_element(url_check, element_name)
+    if element_found:
         print("In stock")
-        q.append(True)
-        if False not in q:
-            send_msg(f"{conf['item_name']} is in stock!")
+        send_msg(f"{conf['item_name']} is in stock! {q}")
     else:
         print("Out of stock")
 
@@ -50,3 +60,4 @@ def check_inventory():
 while True:
     check_inventory()
     time.sleep(15)
+
