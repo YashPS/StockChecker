@@ -9,6 +9,8 @@ from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
 
 with open('./config/config.yaml') as f:
     conf = yaml.safe_load(f)
@@ -28,16 +30,18 @@ def find_element(url, element_name):
     timeout = 5
     options = webdriver.ChromeOptions()
     options.add_argument('--headless')
-    driver = webdriver.Chrome(options=options, executable_path='./execs/chromedriver.exe')
+    driver = webdriver.Chrome(options=options, service=Service(ChromeDriverManager().install()))
     driver.get(url)
 
     try:
         myElem = WebDriverWait(driver, timeout).until(
         EC.presence_of_element_located((By.CSS_SELECTOR, element_name)))
+        driver.quit()
         return False
     except TimeoutException:
+        driver.quit()
         return True
-    driver.quit()
+
 
 def check_item_in_stock(page_html):
     soup = BeautifulSoup(page_html, 'html.parser')

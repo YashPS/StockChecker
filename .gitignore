@@ -5,3 +5,4 @@
 /session.session
 /.idea
 /__pycache__
+geckodriver.log
