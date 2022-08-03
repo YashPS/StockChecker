@@ -3,7 +3,6 @@ import requests
 import time
 from selenium import webdriver
 import yaml
-from collections import deque
 from selenium import webdriver
 from selenium.common.exceptions import TimeoutException
 from selenium.webdriver.support.ui import WebDriverWait
@@ -14,7 +13,6 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 with open('./config/config.yaml') as f:
     conf = yaml.safe_load(f)
-q = deque([False, False, False], maxlen=5)
 
 
 def send_msg(text):
@@ -56,7 +54,7 @@ def check_inventory():
     element_found = find_element(url_check, element_name)
     if element_found:
         print("In stock")
-        send_msg(f"{conf['item_name']} is in stock! {q}")
+        send_msg(f"{conf['item_name']} is in stock! Buy now - \n{url_check}")
     else:
         print("Out of stock")
 
